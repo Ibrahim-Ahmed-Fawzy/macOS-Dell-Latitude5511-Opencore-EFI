@@ -1,46 +1,60 @@
 # Dell Latitude 5511 with macOS Sequoia
-A collection of all files needed to run Monterey on a Dell 5411 or 5511.
-It will also work with Catalina or Big Sur (checkout older releases)
+A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 
 ![Screenshot](img/desktop.png)
 
-## 🔍 Overview
-This is more of a compilation of information and configs from various repositories and forums than a place where real development happens. This repository should contain everything needed to get Monterey up and running on your Dell Latitude 5411 or 5511 laptop.
-
-## ✔️ Status
+## 💻 Status
 | Hardware | Model | Status | Comments |
 | ------------- | ------------- | ------------- | ------------- |
 | **CPU** | Intel Core i7-10850H | ✅ Working | Power Management fully working. Goes down to 800MHz and boosts to 5.1GHz. 2-3W power consumption in idle stage. |
 | **iGPU** | Intel UHD Graphics 630 | ✅ Working | Fully supported including Turbo, QE/CI acceleration, Metal and 2GiB of VRAM but no DRM in Safari |
-| **Internal Display** | 1920x1080@60Hz | ✅ Working | Internal eDP display fully working including Backlight control. |
-| **External Display(s)** | DP 1.4, HDMI 2.0 via LSPCON | ✅ Working | 3840x1600@85Hz via Thunderbolt/DP and 3840x2160@60Hz via HDMI tested. 4 displays (Internal + 3 external, 2 via Thunderbolt and 1 HDMI) simultaneously working fine. If using a Thunderbolt dock for multiple displays, you can only connect one display to the dock connectors. For the second display, you have to use an additional USB-C display adapter connected to the "Passthrough"/Daisy Chain Thunderbolt port of your dock because macOS does not support MST.  |
-| **SSD** | Micron 2300 NVMe 512GB | ✅ Working |
-| **Trackpad** | I2C ALPS ???? (Named Dell09C0) | ✅ Working | Working with full gesture support (5 fingers) ~~but the hardware buttons are not working. You can use left/right click with touch tap (change in settings).~~ |
-| **Wi-Fi/ BT** | Dell DW1560 | ✅ Working | The stock Intel AX Wi-Fi 6 card needs to be swapped out to a compatible card. |
-| **LAN** | Intel I219-LM | ✅ Working | |
-| **Thunderbolt/ USB-C** | Intel JHL7540 / Titan Ridge 2C 2018 | ✅ Working | USB-C charging works. Thunderbolt and USB-C devices are working. Tested with a Dell WD19TB Thunderbolt Dock and an USB-C iPad. Hotplugging of USB-C displays or USB-C docks with a display attached to it, is buggy sometimes. But USB-C to HDMI or (m)DP adapters are working fine. |
-| **USB** | | ✅ Working | All Ports fully working with USB 2.0, 3.0 and 3.1/3.2 speed |
-| **Internal Speakers** | Realtek ALC3204 | ✅ Working | Fully working including Mac boot chime |
-| **Internal Microphone array** | | ✅ Working |
-| **Headphone Jack** | | ✅ Working | Works, including automatic switch to headphone if plugged in. |
-| **Webcam** | | ✅ Working |
-| **SDXC reader** | Realtek RTS525A | ✅ Working |
-| **Fingerprint reader** | | ❌ Not working | Will never work, because of MacBooks with TouchID and T2 chip and proprietary Windows drivers for Dell. |
+| **dGPU** | NVIDIA GeForce MX250 | ❌ Not working | It was disabled by ACPI because it was not supported on macOS |
+| **Sound Card** | Realtek ALC3204 | ✅ Working | Fully working including Mac boot chime |
+| **Wireless Card** | Intel AX201 | ✅ Working | Includes Wi-Fi and Bluetooth, both work. |
+| **LAN Card** | Intel I219-LM | ✅ Working | |
+| **SSD** | KINGSTON SA400S37240G⁩ SSD 240GB | ✅ Working |
+| **NVMe**| | ❌ Not working | It was disabled by ACPI because it was not supported on macOS and was causing kernel panics |
+| **Trackpad** | ******** | ✅ Working | Works with all macOS gestures support, but drag and drop does not work.~ |
+| **Webcam** | ******** | ✅ Working |
+| **HDMI Port** | HDMI 2.0 | ✅ Working | HDMI Audio is not working |
+| **USB Ports** | | ✅ Working | All Ports fully working with USB 2.0, 3.0 and 3.1/3.2 speed |
+| **Thunderbolt/ USB-C** | ******** | ✅ Working | USB-C charging works. USB-C to HDMI or (m)DP adapters are working. |
+| **SD reader** | ******** | ✅ Working |
 
+## 🎖️ Features
 | Features | Status | Comments |
 | ------------- | ------------- | ------------- |
 | **Sleep** | ✅ Working |
 | **Lid Open/Close** | ✅ Working | Goes to Sleep when no external display connected and wakes up.
-| **Sidecar** | ✅ Working |
 | **iMessage and App Store** | ✅ Working | Just use a valid SMBIOS, S/N, MLB and MAC-Address. Do not use the random data in my repo as these may be used by others! |
-| **Handoff** | ✅ Working | Tested with iPhone 12 Pro Max, iPhone 13 Pro Max, iPad Pro 12,9" and second Hackintosh |
-| **Sidecar** | ✅ Working | Tested with iPad Pro 12,9" |
-| **Watch Unlock** | ✅ Working | ...most of the time. Tested with Apple Watch series 3 |
-| **FileVault 2** | 🔶 Partially | Encryption itself is working fine but generates a huge boot delay (30-60 seconds) until asking for the FileVault password. I think this is an OpenCore bug. This occurred already on the macOS Catalina Beta and was fixed later. |
 
-## 🗒️ To-Do
-| Features | Comments | Done |
-| ------------- | ------------- | ------------- |
+## 🛠️ Fix problems
+
+### Wi-Fi in sequoia
+- First method
+  
+  1. Download [itlwm.kext](https://github.com/OpenIntelWireless/itlwm/releases) & [Heliport.dmg](https://github.com/OpenIntelWireless/HeliPort/releases)
+  2. Add **itlwm.kext** in `EFI/OC/kext`
+  3. Install **Heilport**
+  4. Take a snapshot for `config.plist` by propertree
+  
+- Second method (spoofing Wi-Fi)
+
+  1. Download [OpenCore-Patcher.pkg](https://github.com/dortania/OpenCore-Legacy-Patcher) & [OCAT](https://github.com/ic005k/OCAuxiliaryTools) & [Hackintool](https://github.com/benbaker76/Hackintool), then install them.
+  2. Download [AMFIPass.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Acidanthera) & [IOSkywalkFamily.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi) & [IO80211FamilyLegacy.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi), then add in `EFI/OC/kext`
+  3. Take a snapshot for `config.plist` by propertree
+  4. You must know the Device path of the network card by opening `Hackintool > PCIe > Device path`, then copy it.
+  5. Open `config.plist` by OCAT.
+  6. Go to `device properties`, then replace `#PciRoot(0x0)/Pci(0x14,0x3)` with your Device path, if the Device path is the same, just remove `#`.
+  7. Disable Secure Boot: Go to `Misc > Security > SecureBootMdel`,then disable it. .
+  8. Disable SIP; Go to `NVRAM > 7C436110-AB2A-4BBB-A880-FE41995C9F82 > csr-active-config`, then set its `value = 030A0000`
+  9. Restart your Device
+  10. Run OCLP, then click `Post-install Root Patch`, then click `Start Root Patching`
+  11. After applying the patch, disable spoofing by adding `#` before the Device path, as it was in its previous state, and do not enable Secure Boot and SIP.
+
+| Problem | Fixing |
+| ------------- | ------------- |
+| **** |
 | **HDMI black screen after wakeup** | No output on the HDMI port after sleep. Works fine again after replugging any display cable. | ❌ No |
 | **Battery reading** | Buggy or not updating from time to time when external displays connected | ❌ No |
 | **Random Kernel Panics** | Kernel panics around once a month after waking from sleep | ❌ No |
