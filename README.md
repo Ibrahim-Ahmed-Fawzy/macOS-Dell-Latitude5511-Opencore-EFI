@@ -52,12 +52,31 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
   11. After applying the patch, disable spoofing by adding `#` before the Device path, as it was in its previous state, and do not enable Secure Boot and SIP.
 
 
-### Fix drag and drop in trackpad
+### Fix drag and drop in trackpad (Trackpad gestures will be disabled)
 1. Download [VoodooSMBus.kext](https://github.com/VoodooSMBus/VoodooSMBus/releases)
 2. Delete all Voodoo from `EFI/OC/kext`, and keep `VoodooPS2Controller.kext`, then add `voodooSMBus.kext`
 3. Take a snapshot for `config.plist` by propertree
 4. Restart your Device
 
+
+### Fix App Store & Change SMBIOS
+1. Download [GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
+2. Run `GenSMBIOS.command` in mac or `GenSMBIOS.bat` in win
+3. Choose `1` to update the tool.
+4. Choose `2`, then drag `config.plist`
+5. Choose `3`, to generate SMBIOS, then enter, then enter the device model that is compatible with you.
+6. Take the Serial and check it on [Check Coverage](https://checkcoverage.apple.com), it must be unused.
+- **If the MacBookPro16.1 model is compatible with you, choose it because the USB Map in the repository matches MacBookPro16.1. If this model is not compatible with you, you will need to change the model in the USB Map.**
+
+
+  ### Change SMBIOS In USBMap
+  1. Download [USBMap](https://github.com/corpnewt/USBMap)
+  2. Run `USBMapInjectorEdit.command` for mac or `USBMapInjectorEdit` for win
+  3. Drag `USBPorts.kext`
+  4. Choose `1`
+  5. Choose `S`
+  6. Enter your device model
+  7. And repeat these steps for the all
 
 ## 🖥 Installation
 
