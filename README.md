@@ -13,13 +13,13 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 | **Wireless Card** | Intel AX201 | ✅ Working | Includes Wi-Fi and Bluetooth, both work. |
 | **LAN Card** | Intel I219-LM | ✅ Working | |
 | **SSD** | KINGSTON SA400S37240G⁩ SSD 240GB | ✅ Working |
-| **NVMe**| | ❌ Not working | It was disabled by ACPI because it was not supported on macOS and was causing kernel panics |
-| **Trackpad** | ******** | ✅ Working | Works with all macOS gestures support, but drag and drop does not work.~ |
-| **Webcam** | ******** | ✅ Working |
+| **NVMe**| PC611 NVMe SK hynix 512GB | ❌ Not working | It was disabled by ACPI because it was not supported on macOS and was causing kernel panics |
+| **Trackpad** | I2C HID Device | ✅ Working | Works with all macOS gestures support, but drag and drop does not work.~ |
+| **Webcam** |  | ✅ Working |
 | **HDMI Port** | HDMI 2.0 | ✅ Working | HDMI Audio is not working |
 | **USB Ports** | | ✅ Working | All Ports fully working with USB 2.0, 3.0 and 3.1/3.2 speed |
-| **Thunderbolt/ USB-C** | ******** | ✅ Working | USB-C charging works. USB-C to HDMI or (m)DP adapters are working. |
-| **SD reader** | ******** | ✅ Working |
+| **Thunderbolt/ USB-C** | Intel JHL7540 | ✅ Working | USB-C charging works. USB-C to HDMI or (m)DP adapters are working. |
+| **SD reader** | Realtek RTS525A | ✅ Working |
 
 ## 🎖️ Features
 | Features | Status | Comments |
