@@ -1,7 +1,7 @@
 # Dell Latitude 5511 with macOS Sequoia
 A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 
-![Screenshot](img/desktop.png)
+
 
 ## 💻 Status
 | Hardware | Model | Status | Comments |
