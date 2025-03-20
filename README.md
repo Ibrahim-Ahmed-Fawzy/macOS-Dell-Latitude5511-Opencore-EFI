@@ -89,7 +89,7 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 
 ### ⚡️ Performance
 CPU power management is done by `CPUFriend.kext` while `CPUFriendDataProvider.kext` defines how it should be done. `CPUFriendDataProvider.kext` is generated for a specific CPU and power setting. The one supplied in this repository was made for the Intel Core i7-10850H and is optimized for optimized performance (like on normal MacBook Pro's). In case you have another CPU, you must create a `CPUFriendDataProvider.kext` for your processor.
-- `CPUFriendDataProvider.kext` must be disabled before installing the macOS, then restart it after installation
+- `CPUFriendDataProvider.kext` must be disabled before installing the macOS, then enable it after installation
 
 
  ### ✍🏻 Conclusion
