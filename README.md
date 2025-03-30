@@ -13,7 +13,7 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 | **Wireless Card** | Intel AX201 | ✅ Working | Includes Wi-Fi and Bluetooth, both work. |
 | **LAN Card** | Intel I219-LM | ✅ Working | |
 | **SSD** | KINGSTON SA400S37240G⁩ SSD 240GB | ✅ Working |
-| **NVMe**| PC611 NVMe SK hynix 512GB | ❌ Not working | It was disabled by ACPI because it was not supported on macOS and was causing kernel panics |
+| **NVMe**| 2550 micron 512GB | ✅ working |
 | **Trackpad** | I2C HID Device | ✅ Working | Works with all macOS gestures support, but drag and drop does not work.~ |
 | **Webcam** |  | ✅ Working |
 | **HDMI Port** | HDMI 2.0 | ✅ Working | HDMI Audio is not working |
