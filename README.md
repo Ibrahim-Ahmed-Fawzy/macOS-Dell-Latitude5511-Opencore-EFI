@@ -40,16 +40,17 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
   
 - Second method (spoofing Wi-Fi)
   1. Download [OpenCore-Patcher.pkg](https://github.com/dortania/OpenCore-Legacy-Patcher) & [OCAT](https://github.com/ic005k/OCAuxiliaryTools) & [Hackintool](https://github.com/benbaker76/Hackintool), then install them.
-  2. Download [AMFIPass.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Acidanthera) & [IOSkywalkFamily.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi) &   [IO80211FamilyLegacy.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi), then add in `EFI/OC/kext`
-  3. Take a snapshot for `config.plist` by propertree
-  4. You must know the Device path of the network card by opening `Hackintool > PCIe > Device path`, then copy it.
-  5. Open `config.plist` by OCAT.
-  6. Go to `device properties`, then replace `#PciRoot(0x0)/Pci(0x14,0x3)` with your Device path, if the Device path is the same, just remove `#`.
-  7. Disable Secure Boot: Go to `Misc > Security > SecureBootMdel`,then disable it. .
-  8. Disable SIP; Go to `NVRAM > 7C436110-AB2A-4BBB-A880-FE41995C9F82 > csr-active-config`, then set its `value = 030A0000`
-  9. Restart your Device
-  10. Run OCLP, then click `Post-install Root Patch`, then click `Start Root Patching`
-  11. After applying the patch, disable spoofing by adding `#` before the Device path, as it was in its previous state, and do not enable Secure Boot and SIP.
+  2. Download [AMFIPass.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Acidanthera) & [IOSkywalkFamily.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi) &   [IO80211FamilyLegacy.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi), then add in `EFI/OC/kext`, They are already in the attached file in the repository.
+  3. Take a snapshot for `config.plist` by **propertree**, Or enable them by **OCAT** if you are using the file in the repo.
+  4. Enable `com.apple.iokit.IOSskywalkFamily` from `Kernal > Block`
+  5. You must know the Device path of the network card by opening `Hackintool > PCIe > Device path`, then copy it.
+  6. Open `config.plist` by **OCAT**.
+  7. Go to `device properties`, then replace `#PciRoot(0x0)/Pci(0x14,0x3)` with your Device path, if the Device path is the same, just remove `#`.
+  8. Disable Secure Boot: Go to `Misc > Security > SecureBootMdel`,then disable it. .
+  9. Disable SIP; Go to `NVRAM > 7C436110-AB2A-4BBB-A880-FE41995C9F82 > csr-active-config`, then set its `value = 030A0000`
+  10. Restart your Device
+  11. Run **OCLP**, then click `Post-install Root Patch`, then click `Start Root Patching`
+  12. After applying the patch, disable spoofing by adding `#` before the Device path, as it was in its previous state, and do not enable Secure Boot and SIP.
 
 
 ### Fix drag and drop in trackpad (Trackpad gestures will be disabled)
