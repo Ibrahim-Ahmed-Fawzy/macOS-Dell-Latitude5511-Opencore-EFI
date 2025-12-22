@@ -78,12 +78,12 @@ CPU power management is done by **CPUFriend.kext** while **CPUFriendDataProvider
 8. Go to `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82`, And Set the value of **csr-active-config** to  `030A0000`, And add `alcid=x` to **boot-args** Where x is the layout-id value of your sound card's codec.
     >###### In my case, I will set `alcid=99` because this is the layout-id value for my sound card, which is a Realtek ALC256.
     >###### You need to know your **sound card's codec** to determine which **layout-id value** to use.
-    >- ###### To find your **sound card's codec** & **Layout-id**
-        ###### 1. Open **Device Manager**, then go to **Sound**, right-click on your sound card name and select **Properties**.
-        ###### 2. Go to the **details** tab and select **Hardware IDs**
-        ###### 4. The number after `DEV_0256` **is your sound card codec**. For example, the codec here is `256`
-        ###### 5. Then search for the **layout-id** using your sound card's codec in [this guide](https://github.com/acidanthera/AppleALC/wiki/Supported-codecs).
-        >###### If you can't find your codec in the guide, your card isn't compatible with macOS. If you do find it, you've likely seen several valid layout values ​​for your card, find at least one of the values ​​and replace it with an x.
+    >>- ###### To find your **sound card's codec** & **Layout-id**
+     >>###### 1. Open **Device Manager**, then go to **Sound**, right-click on your sound card name and select **Properties**.
+     >>###### 2. Go to the **details** tab and select **Hardware IDs**
+     >>###### 4. The number after `DEV_0256` **is your sound card codec**. For example, the codec here is `256`
+     >>###### 5. Then search for the **layout-id** using your sound card's codec in [this guide](https://github.com/acidanthera/AppleALC/wiki/Supported-codecs).
+     >>>###### If you can't find your codec in the guide, your card isn't compatible with macOS. If you do find it, you've likely seen several valid layout values ​​for your card, find at least one of the values ​​and replace it with an x.
 9. Open **MyKextInstaller**, and make sure that the four conditions gave you the green light, Then click on `install kexts`, And select `AppleHDA.kext`
 10. Restart your Device
 
