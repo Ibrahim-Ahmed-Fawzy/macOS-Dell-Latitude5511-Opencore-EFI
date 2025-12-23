@@ -1,5 +1,5 @@
-# Dell Latitude 5511 with macOS Sequoia (Opencore 1.0.6)
-A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
+# Dell Latitude 5511 with macOS Tahoe (Opencore 1.0.6)
+A collection of files needed to run Tahoe & Sequoia & Sonoma on a Dell Latitude 5511.
 
 ![Screenshot](img/desktop.png)
 
@@ -9,12 +9,12 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 | **CPU** | Intel Core i7-10850H | ✅ Working | Power Management fully working. Goes down to 800MHz and boosts to 5.1GHz. 2-3W power consumption in idle stage. |
 | **iGPU** | Intel UHD Graphics 630 | ✅ Working | Fully supported including Turbo, QE/CI acceleration, Metal and 2GiB of VRAM but no DRM in Safari |
 | **dGPU** | NVIDIA GeForce MX250 | ❌ Not working | It was disabled by ACPI because it was not supported on macOS |
-| **Sound Card** | Realtek ALC3204 | ✅ Working | Fully working including Mac boot chime |
-| **Wireless Card** | Intel AX201 | ✅ Working | Includes Wi-Fi and Bluetooth, both work. |
+| **Sound Card** | Realtek ALC3204 | ✅ Working | Fully working including Mac boot chime (By spoofing) |
+| **Wireless Card** | Intel AX201 | ✅ Working | Includes Wi-Fi and Bluetooth, and both work. However, the Wi-Fi only works with HeliPort. |
 | **LAN Card** | Intel I219-LM | ✅ Working | |
 | **SSD** | KINGSTON SA400S37240G⁩ SSD 240GB | ✅ Working |
 | **NVMe**| 2550 micron 512GB | ✅ working |
-| **Trackpad** | I2C HID Device | ✅ Working | Works with all macOS gestures support, but drag and drop does not work.~ |
+| **Trackpad** | I2C HID Device | ✅ Working | Works with all macOS gestures support, but drag and drop does not work. |
 | **Webcam** |  | ✅ Working |
 | **HDMI Port** | HDMI 2.0 | ✅ Working | HDMI Audio is not working |
 | **USB Ports** | | ✅ Working | All Ports fully working with USB 2.0, 3.0 and 3.1/3.2 speed |
@@ -28,34 +28,48 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 | **Lid Open/Close** | ✅ Working | Goes to Sleep when no external display connected and wakes up.
 | **iMessage and App Store** | ✅ Working | Just use a valid SMBIOS, S/N, MLB and MAC-Address. Do not use the random data in my repo as these may be used by others! |
 
+## 🖥 Before Installation
+
+### Create USBMapp
+It is important to create a new USBMap specific to your device before installing the macOS Tahoe. To create a USBMap, Download [USBToolBox](http://github.com/USBToolBox/tool/releases/tag/0.2) and follow [this guide](https://github.com/USBToolBox/tool.git). Then follow the rest of the steps.
+
+1. Download [Propertree](https://github.com/corpnewt/ProperTree.git) & Install [Python](https://www.python.org/downloads/)
+2. Make sure that files **USBToolBox.kext** and **UTBMap.kext** which you recently created, are located in this path. `EFI/OC/kext`.
+3. Take a snapshot for `config.plist` by propertree
+
+>Disable these kexts **IntelBluetoothFirmware.kext**, **BlueToolFixup.kext**, **IntelBTPatcher**, **CPUFriend.kext**,  **CPUFriendDataProvider.kext**. To avoid kernal panic, Then enable them after installation.
+
+### BIOS/UEFI settings
+- Secure Boot: Off (Default: On)
+- SATA Mode: AHCI (Default: RAID) (Also includes NVMe drives! macOS will not see any drives when using RAID mode)
+- Intel SGX: Software Controlled or Off
+- Thunderbolt Configuration: No Security
+
+### Performance
+CPU power management is done by **CPUFriend.kext** while **CPUFriendDataProvider.kext** defines how it should be done. **CPUFriendDataProvider.kext** is generated for a specific CPU and power setting. The one supplied in this repository was made for the Intel Core i7-10850H and is optimized for optimized performance (like on normal MacBook Pro's). In case you have another CPU, you must create a **CPUFriendDataProvider.kext** for your processor.
+- `CPUFriendDataProvider.kext` must be disabled before installing the macOS, then enable it after installation
+
+## 🧰 After Installation
+### If you are using the EFI file included in the repository
+1. Download [OCAT](https://github.com/ic005k/OCAuxiliaryTools.git)
+2. Open`config.plist` by OCAT
+3. Go to `Kernal/Add`
+4. Enable these kexts, which we previously disabled **IntelBluetoothFirmware.kext**, **BlueToolFixup.kext**, **IntelBTPatcher**, **CPUFriend.kext**,  **CPUFriendDataProvider.kext**.
+
+
 ## 🛠️ Fix problems
 
-### Fix Wi-Fi in sequoia
-- First method
+### Fix Wi-Fi in Tahoe
+
   1. Download [itlwm.kext](https://github.com/OpenIntelWireless/itlwm/releases) & [Heliport.dmg](https://github.com/OpenIntelWireless/HeliPort/releases)
   2. Add **itlwm.kext** in `EFI/OC/kext`
   3. Install **Heilport**
   4. Take a snapshot for `config.plist` by propertree
   5. Restart your Device
-  
-- Second method (spoofing Wi-Fi)
-  1. Download [OpenCore-Patcher.pkg](https://github.com/dortania/OpenCore-Legacy-Patcher) & [OCAT](https://github.com/ic005k/OCAuxiliaryTools) & [Hackintool](https://github.com/benbaker76/Hackintool), then install them.
-  2. Download [AMFIPass.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Acidanthera) & [IOSkywalkFamily.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi) &   [IO80211FamilyLegacy.kext](https://github.com/dortania/OpenCore-Legacy-Patcher/tree/main/payloads/Kexts/Wifi), then add in `EFI/OC/kext`, They are already in the attached file in the repository.
-  3. Take a snapshot for `config.plist` by **propertree**, Or enable them by **OCAT** if you are using the file in the repo.
-  4. Enable `com.apple.iokit.IOSskywalkFamily` from `Kernal > Block`
-  5. You must know the Device path of the network card by opening `Hackintool > PCIe > Device path`, then copy it.
-  6. Open `config.plist` by **OCAT**.
-  7. Go to `device properties`, then replace `#PciRoot(0x0)/Pci(0x14,0x3)` with your Device path, if the Device path is the same, just remove `#`.
-  8. Disable Secure Boot: Go to `Misc > Security > SecureBootMdel`,then disable it. .
-  9. Disable SIP; Go to `NVRAM > 7C436110-AB2A-4BBB-A880-FE41995C9F82 > csr-active-config`, then set its `value = 030A0000`
-  10. Restart your Device
-  11. Run **OCLP**, then click `Post-install Root Patch`, then click `Start Root Patching`
-  12. After applying the patch, disable spoofing by adding `#` before the Device path, as it was in its previous state, and do not enable Secure Boot and SIP.
-
 
 ### Fix drag and drop in trackpad (Trackpad gestures will be disabled)
 1. Download [VoodooSMBus.kext](https://github.com/VoodooSMBus/VoodooSMBus/releases)
-2. Delete all Voodoo from `EFI/OC/kext`, and keep `VoodooPS2Controller.kext`, then add `voodooSMBus.kext`
+2. Delete all Voodoo from `EFI/OC/kext`, and keep **VoodooPS2Controller.kext**, then add **voodooSMBus.kext**
 3. Take a snapshot for `config.plist` by propertree
 4. Restart your Device
 
@@ -79,18 +93,7 @@ A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 6. Enter your device model
 7. And repeat these steps for the all
 
-## 🖥 Installation
 
-### BIOS/UEFI settings
-- Secure Boot: Off (Default: On)
-- SATA Mode: AHCI (Default: RAID) (Also includes NVMe drives! macOS will not see any drives when using RAID mode)
-- Intel SGX: Software Controlled or Off
-- Thunderbolt Configuration: No Security
-
-
-### ⚡️ Performance
-CPU power management is done by `CPUFriend.kext` while `CPUFriendDataProvider.kext` defines how it should be done. `CPUFriendDataProvider.kext` is generated for a specific CPU and power setting. The one supplied in this repository was made for the Intel Core i7-10850H and is optimized for optimized performance (like on normal MacBook Pro's). In case you have another CPU, you must create a `CPUFriendDataProvider.kext` for your processor.
-- `CPUFriendDataProvider.kext` must be disabled before installing the macOS, then enable it after installation
 
 
  ### ✍🏻 Conclusion
