@@ -1,4 +1,4 @@
-# Dell Latitude 5511 with macOS Sequoia
+# Dell Latitude 5511 with macOS Sequoia (Opencore 1.0.6)
 A collection of files needed to run Sequoia & Sonoma on a Dell Latitude 5511.
 
 ![Screenshot](img/desktop.png)
