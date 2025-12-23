@@ -31,7 +31,7 @@ A collection of files needed to run Tahoe & Sequoia & Sonoma on a Dell Latitude 
 ## 🖥 Before Installation
 
 ### Create USBMapp
-It is important to create a new USBMap specific to your device before installing the macOS Tahoe. To create a USBMap, Download [USBToolBox](http://github.com/USBToolBox/tool/releases/tag/0.2) and follow [this guide](https://github.com/USBToolBox/tool.git). Then follow the rest of the steps.
+It is important to create a new USBMap specific to your device before installing the macOS Tahoe. To create a USBMap, Download [USBToolBox](https://github.com/USBToolBox/tool/releases) and follow [this guide](https://github.com/USBToolBox/tool.git). Then follow the rest of the steps.
 
 1. Download [Propertree](https://github.com/corpnewt/ProperTree.git) & Install [Python](https://www.python.org/downloads/)
 2. Make sure that files **USBToolBox.kext** and **UTBMap.kext** which you recently created, are located in this path. `EFI/OC/kext`.
@@ -50,8 +50,8 @@ CPU power management is done by **CPUFriend.kext** while **CPUFriendDataProvider
 - `CPUFriendDataProvider.kext` must be disabled before installing the macOS, then enable it after installation
 
 ## 🧰 After Installation
-### If you are using the EFI file included in the repository
-1. Download [OCAT](https://github.com/ic005k/OCAuxiliaryTools.git)
+### If you are using the EFI file included in the repository.
+1. Download [OCAT](https://github.com/ic005k/OCAuxiliaryTools/releases)
 2. Open`config.plist` by OCAT
 3. Go to `Kernal/Add`
 4. Enable these kexts, which we previously disabled **IntelBluetoothFirmware.kext**, **BlueToolFixup.kext**, **IntelBTPatcher**, **CPUFriend.kext**,  **CPUFriendDataProvider.kext**.
@@ -67,6 +67,26 @@ CPU power management is done by **CPUFriend.kext** while **CPUFriendDataProvider
   4. Take a snapshot for `config.plist` by propertree
   5. Restart your Device
 
+### Fix audio in Tahoe
+1. Download [MyKextInstaller](https://github.com/Mirone/MyKextInstaller/releases) & [AppleALC.kext](https://github.com/acidanthera/AppleALC/releases) & [AppleHDA.kext](https://github.com/Mirone/MyKextInstaller/releases) & [Propertree](https://github.com/corpnewt/ProperTree.git) & [OCAT](https://github.com/ic005k/OCAuxiliaryTools/releases)
+2. Download version of [Kernel Debug Kit](https://github.com/dortania/KdkSupportPkg/releases) compatible with your macOS version.
+3. Install **Kernel Debug Kit.dmg**
+4. Add **AppleALC.kext** `in EFI/OC/kext`
+5. Take a snapshot for `config.plist` by propertree
+6. Open `config.plist` by OCAT
+7. Go to `Misc/Security`, And Disable SecureBootModel.
+8. Go to `NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82`, And Set the value of **csr-active-config** to  `030A0000`, And add `alcid=x` to **boot-args** Where x is the layout-id value of your sound card's codec.
+    >###### In my case, I will set `alcid=99` because this is the layout-id value for my sound card, which is a Realtek ALC256.
+    >###### You need to know your **sound card's codec** to determine which **layout-id value** to use.
+    >- ###### To find your **sound card's codec** & **Layout-id**
+        ###### 1. Open **Device Manager**, then go to **Sound**, right-click on your sound card name and select **Properties**.
+        ###### 2. Go to the **details** tab and select **Hardware IDs**
+        ###### 4. The number after `DEV_0256` **is your sound card codec**. For example, the codec here is `256`
+        ###### 5. Then search for the **layout-id** using your sound card's codec in [this guide](https://github.com/acidanthera/AppleALC/wiki/Supported-codecs).
+        >###### If you can't find your codec in the guide, your card isn't compatible with macOS. If you do find it, you've likely seen several valid layout values ​​for your card, find at least one of the values ​​and replace it with an x.
+9. Open **MyKextInstaller**, and make sure that the four conditions gave you the green light, Then click on `install kexts`, And select `AppleHDA.kext`
+10. Restart your Device
+
 ### Fix drag and drop in trackpad (Trackpad gestures will be disabled)
 1. Download [VoodooSMBus.kext](https://github.com/VoodooSMBus/VoodooSMBus/releases)
 2. Delete all Voodoo from `EFI/OC/kext`, and keep **VoodooPS2Controller.kext**, then add **voodooSMBus.kext**
@@ -81,7 +101,8 @@ CPU power management is done by **CPUFriend.kext** while **CPUFriendDataProvider
 4. Choose `2`, then drag `config.plist`
 5. Choose `3`, to generate SMBIOS, then enter, then enter the device model that is compatible with you.
 6. Take the Serial and check it on [Check Coverage](https://checkcoverage.apple.com), it must be unused.
-- **If the MacBookPro16.1 model is compatible with you, choose it because the USB Map in the repository matches MacBookPro16.1. If this model is not compatible with you, you will need to change the model in the USB Map.**
+
+> If the MacBookPro16.1 model is compatible with you, choose it because the USB Map in the repository matches MacBookPro16.1. If this model is not compatible with you, you will need to change the model in the USB Map.
 
 
 ### Change SMBIOS In USBMap
